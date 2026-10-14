@@ -4,6 +4,7 @@ import '../../shared/placeholder_page.dart';
 import 'keranjang_page.dart';
 import 'checkout_page.dart';
 import 'riwayat_pesanan_page.dart';
+import 'detail_pesanan_page.dart';
 
 class PesananRoutes {
   PesananRoutes._();
@@ -16,9 +17,7 @@ class PesananRoutes {
 
     AppRoutes.pesanan: (context) => const RiwayatPesananPage(),
 
-    AppRoutes.pesananDetail: (context) => const PlaceholderPage(
-      title: 'Detail Pesanan',
-    ),
+    AppRoutes.pesananDetail: (context) => const DetailPesananPage(),
 
     // Halaman penjual
     AppRoutes.kantinPesanan: (context) => const PlaceholderPage(
