@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import '../../core/route_names.dart';
 import '../../shared/placeholder_page.dart';
+import 'keranjang_page.dart';
 
 class PesananRoutes {
   PesananRoutes._();
 
   static Map<String, WidgetBuilder> get routes => {
     // Halaman pembeli
-    AppRoutes.keranjang: (context) => const PlaceholderPage(
-      title: 'Keranjang',
-    ),
+    AppRoutes.keranjang: (context) => const KeranjangPage(),
 
     AppRoutes.checkout: (context) => const PlaceholderPage(
       title: 'Checkout',
