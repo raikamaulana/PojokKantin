@@ -26,6 +26,7 @@ class DummyData {
       jamBuka: '07.00',
       jamTutup: '16.00',
       status: 'Aktif',
+      imagePath: 'assets/images/kantin/kantin-kedai-husna.jpeg',
     ),
     Kantin(
       id: 'K002',
@@ -36,6 +37,7 @@ class DummyData {
       jamBuka: '08.00',
       jamTutup: '17.00',
       status: 'Aktif',
+      imagePath: 'assets/images/kantin/kantin-mama-iqbal.jpeg',
     ),
     Kantin(
       id: 'K003',
@@ -46,6 +48,7 @@ class DummyData {
       jamBuka: '07.00',
       jamTutup: '16.00',
       status: 'Aktif',
+      imagePath: 'assets/images/kantin/kantin-f-two.jpeg',
     ),
   ];
 
@@ -59,6 +62,7 @@ class DummyData {
       deskripsi: 'Nasi hangat dengan ayam geprek dan sambal.',
       harga: 15000,
       tersedia: true,
+      imagePath: 'assets/images/kantin/kantin-bunda.jpeg',
     ),
     MenuKantin(
       id: 'M002',
@@ -68,6 +72,7 @@ class DummyData {
       deskripsi: 'Nasi dengan aneka lauk dan sayuran.',
       harga: 12000,
       tersedia: true,
+      imagePath: 'assets/images/kantin/kantin-bunda.jpeg',
     ),
     MenuKantin(
       id: 'M003',
@@ -77,6 +82,7 @@ class DummyData {
       deskripsi: 'Teh manis dingin yang menyegarkan.',
       harga: 4000,
       tersedia: true,
+      imagePath: 'assets/images/kantin/kantin-bunda.jpeg',
     ),
     MenuKantin(
       id: 'M004',
@@ -86,6 +92,7 @@ class DummyData {
       deskripsi: 'Cireng murah enak dan renyah.',
       harga: 2000,
       tersedia: false,
+      imagePath: 'assets/images/kantin/kantin-bunda.jpeg',
     ),
   ];
 
@@ -129,6 +136,7 @@ class DummyData {
       jamBuka: '07.00',
       jamTutup: '15.00',
       status: 'Menunggu',
+      imagePath: 'assets/images/kantin/kantin-bunda.jpeg',
     ),
     Kantin(
       id: 'K005',
@@ -139,6 +147,7 @@ class DummyData {
       jamBuka: '09.00',
       jamTutup: '17.00',
       status: 'Menunggu',
+      imagePath: 'assets/images/kantin/kantin-mang-ono.jpeg',
     ),
   ];
 
