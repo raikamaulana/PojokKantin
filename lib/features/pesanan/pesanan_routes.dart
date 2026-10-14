@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/route_names.dart';
 import '../../shared/placeholder_page.dart';
 import 'keranjang_page.dart';
+import 'checkout_page.dart';
 
 class PesananRoutes {
   PesananRoutes._();
@@ -10,9 +11,7 @@ class PesananRoutes {
     // Halaman pembeli
     AppRoutes.keranjang: (context) => const KeranjangPage(),
 
-    AppRoutes.checkout: (context) => const PlaceholderPage(
-      title: 'Checkout',
-    ),
+    AppRoutes.checkout: (context) => const CheckoutPage(),
 
     AppRoutes.pesanan: (context) => const PlaceholderPage(
       title: 'Riwayat Pesanan',
