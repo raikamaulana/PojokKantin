@@ -21,7 +21,6 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentUser = user ?? DummyData.currentUser;
-    final colorScheme = Theme.of(context).colorScheme;
     final isSeller = currentUser.role == 'penjual';
     final isAdmin = currentUser.role == 'admin';
 
