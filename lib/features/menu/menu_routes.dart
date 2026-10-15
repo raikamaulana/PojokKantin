@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import '../../core/route_names.dart';
 import '../../shared/placeholder_page.dart';
+import 'home_page.dart';
 
 class MenuRoutes {
   MenuRoutes._();
 
   static Map<String, WidgetBuilder> get routes => {
     // Halaman pembeli
-    AppRoutes.home: (context) => const PlaceholderPage(
-      title: 'Beranda',
-    ),
+    AppRoutes.home: (context) => const HomePage(),
 
     AppRoutes.kantinMenuList: (context) => const PlaceholderPage(
       title: 'Daftar Menu Kantin',

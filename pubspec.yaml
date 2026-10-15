@@ -61,6 +61,7 @@ flutter:
     - assets/images/logo/
     - assets/images/kantin/
     - assets/images/menu/
+    - assets/images/profile/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
