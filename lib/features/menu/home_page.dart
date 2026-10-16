@@ -135,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 5),
                   const Text(
-                    'Mau pesan makan apa hari ini di kampus?',
+                    'Mau pesan makan apa hari ini di kantin belakang?',
                     style: TextStyle(
                       fontSize: 13,
                       color: AppTheme.textSecondary,
@@ -270,6 +270,7 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.pushNamed(
                                   context,
                                   AppRoutes.kantinMenuList,
+                                  arguments: kantin.id,
                                 );
                               },
                             );
@@ -319,6 +320,7 @@ class _HomePageState extends State<HomePage> {
                               Navigator.pushNamed(
                                 context,
                                 AppRoutes.menuDetail,
+                                arguments: menu,
                               );
                             },
                             onAdd: () {
