@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../core/dummy_data.dart';
@@ -39,23 +38,15 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
     // Data contoh sementara, disesuaikan dengan desain.
     _items = [
-      _ItemCheckout(
-        menu: DummyData.cariMenu('M001')!,
-        jumlah: 1,
-      ),
-      _ItemCheckout(
-        menu: DummyData.cariMenu('M003')!,
-        jumlah: 1,
-      ),
+      _ItemCheckout(menu: DummyData.cariMenu('M001')!, jumlah: 1),
+      _ItemCheckout(menu: DummyData.cariMenu('M003')!, jumlah: 1),
     ];
   }
 
-  int get _total =>
-      _items.fold(0, (total, item) => total + item.subtotal);
+  int get _total => _items.fold(0, (total, item) => total + item.subtotal);
 
-  Kantin? get _kantin => _items.isEmpty
-      ? null
-      : DummyData.cariKantin(_items.first.menu.kantinId);
+  Kantin? get _kantin =>
+      _items.isEmpty ? null : DummyData.cariKantin(_items.first.menu.kantinId);
 
   String _rupiah(int nominal) {
     final angka = nominal.toString();
@@ -74,13 +65,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Checkout'),
-      ),
+      appBar: AppBar(title: const Text('Checkout')),
       body: _items.isEmpty
-          ? const Center(
-              child: Text('Tidak ada item untuk checkout.'),
-            )
+          ? const Center(child: Text('Tidak ada item untuk checkout.'))
           : Column(
               children: [
                 Expanded(
@@ -123,10 +110,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
-  Widget _buildBagianJudul({
-    required IconData ikon,
-    required String judul,
-  }) {
+  Widget _buildBagianJudul({required IconData ikon, required String judul}) {
     return Row(
       children: [
         Icon(ikon, color: AppTheme.primary, size: 22),
@@ -213,9 +197,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 ),
                 Text(
                   '${_items.fold<int>(0, (sum, item) => sum + item.jumlah)} item',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: const TextStyle(fontWeight: FontWeight.w600),
                 ),
               ],
             ),
@@ -277,50 +259,34 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
-
-Widget _buildPilihanJam() {
-  return Card(
-    child: Padding(
-      padding: const EdgeInsets.all(12),
-      child: RadioGroup<String>(
-        groupValue: _jamAmbil,
-        onChanged: (value) {
-          if (value == null) return;
-          setState(() => _jamAmbil = value);
-        },
+  Widget _buildPilihanJam() {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(12),
         child: Column(
           children: _pilihanJam.map((jam) {
             return RadioListTile<String>(
               value: jam,
+              groupValue: _jamAmbil,
+              onChanged: (value) {
+                if (value == null) return;
+                setState(() => _jamAmbil = value);
+              },
               activeColor: AppTheme.primary,
               contentPadding: EdgeInsets.zero,
               dense: true,
-              title: Text(
-                jam,
-                style: const TextStyle(fontSize: 14),
-              ),
+              title: Text(jam, style: const TextStyle(fontSize: 14)),
             );
           }).toList(),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-
-Widget _buildPilihanPembayaran() {
-  return Card(
-    child: Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 8,
-        horizontal: 12,
-      ),
-      child: RadioGroup<String>(
-        groupValue: _metodePembayaran,
-        onChanged: (value) {
-          if (value == null) return;
-          setState(() => _metodePembayaran = value);
-        },
+  Widget _buildPilihanPembayaran() {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
         child: Column(
           children: _pilihanPembayaran.map((metode) {
             final ikon = switch (metode) {
@@ -331,33 +297,29 @@ Widget _buildPilihanPembayaran() {
 
             return RadioListTile<String>(
               value: metode,
+              groupValue: _metodePembayaran,
+              onChanged: (value) {
+                if (value == null) return;
+                setState(() => _metodePembayaran = value);
+              },
               activeColor: AppTheme.primary,
               contentPadding: EdgeInsets.zero,
               dense: true,
-              secondary: Icon(
-                ikon,
-                color: AppTheme.primary,
-              ),
-              title: Text(
-                metode,
-                style: const TextStyle(fontSize: 14),
-              ),
+              secondary: Icon(ikon, color: AppTheme.primary),
+              title: Text(metode, style: const TextStyle(fontSize: 14)),
             );
           }).toList(),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   Widget _buildRingkasanTotal() {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
       decoration: const BoxDecoration(
         color: AppTheme.surface,
-        border: Border(
-          top: BorderSide(color: AppTheme.divider),
-        ),
+        border: Border(top: BorderSide(color: AppTheme.divider)),
       ),
       child: SafeArea(
         top: false,
@@ -369,10 +331,7 @@ Widget _buildPilihanPembayaran() {
               children: [
                 const Text(
                   'Total Pembayaran',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppTheme.textSecondary,
-                  ),
+                  style: TextStyle(fontSize: 14, color: AppTheme.textSecondary),
                 ),
                 Text(
                   _rupiah(_total),
@@ -395,10 +354,7 @@ Widget _buildPilihanPembayaran() {
                 onPressed: _items.isEmpty ? null : _buatPesanan,
                 child: const Text(
                   'Buat Pesanan',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -450,10 +406,7 @@ class _ItemCheckout {
   final MenuKantin menu;
   final int jumlah;
 
-  const _ItemCheckout({
-    required this.menu,
-    required this.jumlah,
-  });
+  const _ItemCheckout({required this.menu, required this.jumlah});
 
   int get subtotal => menu.harga * jumlah;
 }

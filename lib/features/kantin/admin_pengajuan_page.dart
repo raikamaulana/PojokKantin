@@ -34,6 +34,7 @@ class _AdminPengajuanPageState extends State<AdminPengajuanPage> {
         nomor: k.nomor,
         jamBuka: k.jamBuka,
         jamTutup: k.jamTutup,
+        imagePath: k.imagePath,
         status: hasil,
       );
     });
@@ -67,8 +68,9 @@ class _AdminPengajuanPageState extends State<AdminPengajuanPage> {
           if (i == 0) {
             return Text(
               '$menunggu pengajuan menunggu persetujuan',
-              style: t.textTheme.bodyMedium
-                  ?.copyWith(color: const Color(0xFF6B5F5F)),
+              style: t.textTheme.bodyMedium?.copyWith(
+                color: const Color(0xFF6B5F5F),
+              ),
             );
           }
           final k = _items[i - 1];
@@ -86,8 +88,9 @@ class _AdminPengajuanPageState extends State<AdminPengajuanPage> {
               title: Text(
                 k.nama,
                 overflow: TextOverflow.ellipsis,
-                style: t.textTheme.titleSmall
-                    ?.copyWith(fontWeight: FontWeight.w600),
+                style: t.textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               subtitle: Text(k.lokasi),
               trailing: StatusChip(status: k.status),
