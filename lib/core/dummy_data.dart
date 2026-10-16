@@ -94,6 +94,16 @@ class DummyData {
       tersedia: false,
       imagePath: 'assets/images/kantin/kantin-bunda.jpeg',
     ),
+    MenuKantin(
+      id: 'M005',
+      kantinId: 'K003',
+      nama: 'Mie Ayam',
+      kategori: 'Makanan',
+      deskripsi: 'Mie ayam murah enak.',
+      harga: 10000,
+      tersedia: false,
+      imagePath: 'assets/images/kantin/kantin-bunda.jpeg',
+    ),
   ];
 
   // Data pesanan
