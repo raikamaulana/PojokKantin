@@ -1,40 +1,33 @@
 import 'package:flutter/material.dart';
 import '../../core/route_names.dart';
-import '../../shared/placeholder_page.dart';
+import 'admin_pengajuan_detail_page.dart';
+import 'admin_pengajuan_page.dart';
+import 'kantin_dashboard_page.dart';
+import 'kantin_daftar_page.dart';
+import 'kantin_edit_page.dart';
+import 'kantin_menunggu_page.dart';
+import 'kantin_profil_page.dart';
 
 class KantinRoutes {
   KantinRoutes._();
 
   static Map<String, WidgetBuilder> get routes => {
     // Pendaftaran kantin
-    AppRoutes.kantinDaftar: (context) => const PlaceholderPage(
-      title: 'Daftar Jadi Penjual',
-    ),
+    AppRoutes.kantinDaftar: (context) => const KantinDaftarPage(),
 
-    AppRoutes.kantinMenunggu: (context) => const PlaceholderPage(
-      title: 'Menunggu Persetujuan',
-    ),
+    AppRoutes.kantinMenunggu: (context) => const KantinMenungguPage(),
 
     // Dashboard penjual
-    AppRoutes.kantinDashboard: (context) => const PlaceholderPage(
-      title: 'Dashboard Kantin',
-    ),
+    AppRoutes.kantinDashboard: (context) => const KantinDashboardPage(),
 
-    AppRoutes.kantinProfil: (context) => const PlaceholderPage(
-      title: 'Profil Kantin',
-    ),
+    AppRoutes.kantinProfil: (context) => const KantinProfilPage(),
 
-    AppRoutes.kantinProfilEdit: (context) => const PlaceholderPage(
-      title: 'Edit Kantin',
-    ),
+    AppRoutes.kantinProfilEdit: (context) => const KantinEditPage(),
 
     // Panel admin
-    AppRoutes.adminPengajuan: (context) => const PlaceholderPage(
-      title: 'Cek Pengajuan Kantin',
-    ),
+    AppRoutes.adminPengajuan: (context) => const AdminPengajuanPage(),
 
-    AppRoutes.adminPengajuanDetail: (context) => const PlaceholderPage(
-      title: 'Detail Pengajuan Kantin',
-    ),
+    AppRoutes.adminPengajuanDetail: (context) =>
+        const AdminPengajuanDetailPage(),
   };
 }
