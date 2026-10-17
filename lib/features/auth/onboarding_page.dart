@@ -59,7 +59,7 @@ class OnboardingPage extends StatelessWidget {
                 'Pesan makanan lebih mudah tanpa perlu antre di Kantin Belakang UNSIKA.',
                 textAlign: TextAlign.center,
                 style: theme.textTheme.bodyLarge?.copyWith(
-                  color: theme.colorScheme.onSurface.withOpacity(0.7),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                 ),
               ),
 

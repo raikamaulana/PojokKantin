@@ -87,7 +87,7 @@ class _SplashPageState extends State<SplashPage> {
                   'Pre-Order Kantin Belakang UNSIKA',
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodyLarge?.copyWith(
-                    color: theme.colorScheme.onSurface.withOpacity(0.7),
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                   ),
                 ),
 
@@ -103,7 +103,7 @@ class _SplashPageState extends State<SplashPage> {
                 Text(
                   'Memuat aplikasi...',
                   style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.colorScheme.onSurface.withOpacity(0.6),
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
                 ),
               ],

@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:pojokkantin/features/auth/edit_profil_page.dart';
 import 'package:pojokkantin/features/auth/profil_page.dart';
 import '../../core/route_names.dart';
-import '../../shared/placeholder_page.dart';
 import 'splash_page.dart';
 import 'onboarding_page.dart';
 import 'login_page.dart';
 import 'register_page.dart';
 import 'data_diri_page.dart';
-import 'profil_page.dart';
 
 class AuthRoutes {
   AuthRoutes._();
