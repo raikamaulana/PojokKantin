@@ -5,6 +5,7 @@ import '../../core/theme.dart';
 import '../../core/utils.dart';
 import '../../shared/app_bottom_nav.dart';
 import '../../core/dummy_data.dart';
+import '../../core/route_names.dart';
 
 class MenuDetailPage extends StatefulWidget {
   final MenuKantin menu;
@@ -146,13 +147,9 @@ class _MenuDetailPageState extends State<MenuDetailPage> {
             child: ElevatedButton.icon(
               onPressed: canOrder
                   ? () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            '${menu.nama} ($_quantity) siap ditambahkan. Integrasi keranjang menyusul.',
-                          ),
-                          behavior: SnackBarBehavior.floating,
-                        ),
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.keranjang,
                       );
                     }
                   : null,

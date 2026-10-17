@@ -5,6 +5,7 @@ import '../../core/models.dart';
 import 'home_page.dart';
 import 'kantin_menu_list_page.dart';
 import 'menu_detail_page.dart';
+import 'kelola_menu_page.dart';
 
 class MenuRoutes {
   MenuRoutes._();
@@ -24,9 +25,7 @@ class MenuRoutes {
     },
 
     // Halaman penjual (CRUD menu)
-    AppRoutes.kantinMenu: (context) => const PlaceholderPage(
-      title: 'Menu Saya',
-    ),
+    AppRoutes.kantinMenu: (context) => const KelolaMenuPage(),
 
     AppRoutes.kantinMenuTambah: (context) => const PlaceholderPage(
       title: 'Tambah Menu',

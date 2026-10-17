@@ -324,9 +324,10 @@ class _HomePageState extends State<HomePage> {
                               );
                             },
                             onAdd: () {
-                              showSnack(
+                              Navigator.pushNamed(
                                 context,
-                                '${menu.nama} dipilih. Fitur keranjang akan dihubungkan nanti.',
+                                AppRoutes.menuDetail,
+                                arguments: menu,
                               );
                             },
                           );
