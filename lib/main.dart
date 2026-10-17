@@ -21,7 +21,7 @@ class PojokKantinApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
 
       // Halaman pertama saat aplikasi dibuka
-      initialRoute: AppRoutes.home,
+      initialRoute: AppRoutes.splash,
 
       // Gabungan 26 route dari seluruh anggota
       routes: AppRouter.routes,

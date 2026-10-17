@@ -1,37 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:pojokkantin/features/auth/edit_profil_page.dart';
+import 'package:pojokkantin/features/auth/profil_page.dart';
 import '../../core/route_names.dart';
 import '../../shared/placeholder_page.dart';
+import 'splash_page.dart';
+import 'onboarding_page.dart';
+import 'login_page.dart';
+import 'register_page.dart';
+import 'data_diri_page.dart';
+import 'profil_page.dart';
 
 class AuthRoutes {
   AuthRoutes._();
 
   static Map<String, WidgetBuilder> get routes => {
-    AppRoutes.splash: (context) => const PlaceholderPage(
-      title: 'Splash',
-    ),
+    AppRoutes.splash: (context) => const SplashPage(),
 
-    AppRoutes.onboarding: (context) => const PlaceholderPage(
-      title: 'Onboarding',
-    ),
+    AppRoutes.onboarding: (context) => const OnboardingPage(),
 
-    AppRoutes.login: (context) => const PlaceholderPage(
-      title: 'Login',
-    ),
+    AppRoutes.login: (context) => const LoginPage(),
 
-    AppRoutes.register: (context) => const PlaceholderPage(
-      title: 'Register',
-    ),
+    AppRoutes.register: (context) => const RegisterPage(),
 
-    AppRoutes.registerDataDiri: (context) => const PlaceholderPage(
-      title: 'Form Data Diri',
-    ),
+    AppRoutes.registerDataDiri: (context) => const DataDiriPage(),
 
-    AppRoutes.profil: (context) => const PlaceholderPage(
-      title: 'Profil Saya',
-    ),
+    AppRoutes.profil: (context) => const ProfilPage(),
 
-    AppRoutes.profilEdit: (context) => const PlaceholderPage(
-      title: 'Edit Profil',
-    ),
+    AppRoutes.profilEdit: (context) => const EditProfilPage(),
   };
 }
