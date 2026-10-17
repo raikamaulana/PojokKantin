@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../core/dummy_data.dart';
 import '../core/models.dart';
 import '../core/route_names.dart';
+import '../core/theme.dart';
 
 class AppDrawer extends StatelessWidget {
   final AppUser? user;
@@ -20,91 +21,125 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentUser = user ?? DummyData.currentUser;
-    final colorScheme = Theme.of(context).colorScheme;
     final isSeller = currentUser.role == 'penjual';
     final isAdmin = currentUser.role == 'admin';
 
-    final badges = <String>[
-      if (isAdmin)
-        'Admin'
-      else ...[
-        if (currentUser.identitas.isNotEmpty)
-          currentUser.identitas,
-        if (isSeller) 'Penjual',
-      ],
-    ];
-
     return Drawer(
+      backgroundColor: Colors.white,
       child: Column(
         children: [
           // Header profil
           Container(
             width: double.infinity,
-            padding: EdgeInsets.only(
-              top: MediaQuery.of(context).padding.top + 24,
-              left: 20,
-              right: 20,
-              bottom: 24,
-            ),
-            color: colorScheme.primary,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const CircleAvatar(
-                  radius: 28,
-                  backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.person_outline,
-                    size: 32,
-                    color: Color(0xFF800000),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  currentUser.nama,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium
-                      ?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+            padding: const EdgeInsets.fromLTRB(16, 12, 12, 20),
+            color: AppTheme.primary,
+            child: SafeArea(
+              bottom: false,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Branding dan tombol tutup
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Pojok Kantin',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '— UNSIKA —',
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 10,
+                              letterSpacing: 1.5,
+                            ),
+                          ),
+                        ],
                       ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  currentUser.email,
-                  style: const TextStyle(
-                    color: Colors.white70,
-                    fontSize: 12,
-                  ),
-                ),
-                const SizedBox(height: 8),
-
-                Wrap(
-                  spacing: 6,
-                  runSpacing: 6,
-                  children: badges.map((badge) {
-                    return Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.18),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        badge,
-                        style: const TextStyle(
+                      IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(
+                          Icons.close_rounded,
                           color: Colors.white,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w500,
+                        ),
+                        tooltip: 'Tutup menu',
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 22),
+
+                  // Profil pengguna
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const CircleAvatar(
+                        radius: 27,
+                        backgroundColor: AppTheme.tint,
+                        backgroundImage: AssetImage(
+                          'assets/images/profile/foto-profil.jpg',
                         ),
                       ),
-                    );
-                  }).toList(),
-                ),
-              ],
+
+                      const SizedBox(width: 12),
+
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              currentUser.nama,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+
+                            const SizedBox(height: 3),
+
+                            Text(
+                              currentUser.email,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: Colors.white70,
+                                fontSize: 10,
+                              ),
+                            ),
+
+                            const SizedBox(height: 7),
+
+                            Wrap(
+                              spacing: 6,
+                              runSpacing: 4,
+                              children: [
+                                _profileBadge(currentUser.identitas),
+
+                                if (currentUser.role == 'penjual')
+                                  _profileBadge('Penjual'),
+
+                                if (currentUser.role == 'admin')
+                                  _profileBadge('Admin'),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
 
@@ -116,46 +151,165 @@ class AppDrawer extends StatelessWidget {
               ),
               children: [
                 ListTile(
-                  leading: const Icon(Icons.person_outline),
-                  title: const Text('Profil Saya'),
-                  onTap: () => _navigate(
-                    context,
-                    AppRoutes.profil,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 5,
                   ),
+                  leading: Container(
+                    width: 42,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      color: AppTheme.tint,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(
+                      Icons.person_outline_rounded,
+                      color: AppTheme.primary,
+                      size: 22,
+                    ),
+                  ),
+                  title: const Text(
+                    'Profil Saya',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppTheme.textPrimary,
+                    ),
+                  ),
+                  trailing: const Icon(
+                    Icons.chevron_right_rounded,
+                    color: AppTheme.textSecondary,
+                    size: 20,
+                  ),
+                  onTap: () => _navigate(context, AppRoutes.profil),
                 ),
 
                 if (!isSeller && !isAdmin) ...[
                   _sectionLabel(context, 'LAYANAN KANTIN'),
                   ListTile(
-                    leading: const Icon(Icons.storefront_outlined),
-                    title: const Text('Daftar Jadi Penjual'),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 1,
+                    ),
+
+                    leading: Container(
+                      width: 42,
+                      height: 42,
+                      decoration: BoxDecoration(
+                        color: AppTheme.tint,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Icon(
+                        Icons.storefront_outlined,
+                        color: AppTheme.primary,
+                        size: 22,
+                      ),
+                    ),
+
+                    title: const Text(
+                      'Daftar Jadi Penjual',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: AppTheme.textPrimary,
+                      ),
+                    ),
+
                     subtitle: const Text(
                       'Mulai berjualan di Pojok Kantin',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: AppTheme.textSecondary,
+                      ),
                     ),
-                    onTap: () => _navigate(
-                      context,
-                      AppRoutes.kantinDaftar,
+
+                    trailing: const Icon(
+                      Icons.chevron_right_rounded,
+                      color: AppTheme.textSecondary,
+                      size: 20,
                     ),
+
+                    onTap: () => _navigate(context, AppRoutes.kantinDaftar),
                   ),
                 ],
 
                 if (isSeller) ...[
                   _sectionLabel(context, 'PANEL PENJUAL'),
                   ListTile(
-                    leading: const Icon(Icons.dashboard_outlined),
-                    title: const Text('Dashboard Kantin'),
-                    onTap: () => _navigate(
-                      context,
-                      AppRoutes.kantinDashboard,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 5,
                     ),
+                    leading: Container(
+                      width: 42,
+                      height: 42,
+                      decoration: BoxDecoration(
+                        color: AppTheme.tint,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Icon(
+                        Icons.dashboard_outlined,
+                        color: AppTheme.primary,
+                        size: 22,
+                      ),
+                    ),
+                    title: const Text(
+                      'Dashboard Kantin',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: AppTheme.textPrimary,
+                      ),
+                    ),
+                    subtitle: const Text(
+                      'Kelola kantin dan pesanan',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: AppTheme.textSecondary,
+                      ),
+                    ),
+                    trailing: const Icon(
+                      Icons.chevron_right_rounded,
+                      color: AppTheme.textSecondary,
+                      size: 20,
+                    ),
+                    onTap: () => _navigate(context, AppRoutes.kantinDashboard),
                   ),
                 ],
 
                 if (isAdmin) ...[
                   _sectionLabel(context, 'ADMIN'),
                   ListTile(
-                    leading: const Icon(Icons.fact_check_outlined),
-                    title: const Text('Cek Pengajuan Kantin'),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 5,
+                    ),
+                    leading: Container(
+                      width: 42,
+                      height: 42,
+                      decoration: BoxDecoration(
+                        color: AppTheme.tint,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Icon(
+                        Icons.fact_check_outlined,
+                        color: AppTheme.primary,
+                        size: 22,
+                      ),
+                    ),
+                    title: const Text(
+                      'Cek Pengajuan Kantin',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: AppTheme.textPrimary,
+                      ),
+                    ),
+                    trailing: const Icon(
+                      Icons.chevron_right_rounded,
+                      color: AppTheme.textSecondary,
+                      size: 20,
+                    ),
                     onTap: () => _navigate(
                       context,
                       AppRoutes.adminPengajuan,
@@ -165,16 +319,30 @@ class AppDrawer extends StatelessWidget {
 
                 const SizedBox(height: 12),
                 _sectionLabel(context, 'AKUN'),
-
                 ListTile(
-                  leading: Icon(
-                    Icons.logout,
-                    color: colorScheme.error,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 5,
                   ),
-                  title: Text(
+                  leading: Container(
+                    width: 42,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      color: AppTheme.tint,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(
+                      Icons.logout_rounded,
+                      color: AppTheme.accent,
+                      size: 22,
+                    ),
+                  ),
+                  title: const Text(
                     'Keluar Akun',
                     style: TextStyle(
-                      color: colorScheme.error,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppTheme.accent,
                     ),
                   ),
                   onTap: () {
@@ -187,6 +355,29 @@ class AppDrawer extends StatelessWidget {
                   },
                 ),
               ],
+            ),
+          ),
+        
+          // Footer aplikasi
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
+            decoration: const BoxDecoration(
+              border: Border(
+                top: BorderSide(
+                  color: AppTheme.divider,
+                  width: 1,
+                ),
+              ),
+            ),
+            child: const Text(
+              'Pojok Kantin v1.0.0',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 11,
+                color: Color(0xFFAAAAAA),
+                fontWeight: FontWeight.w400,
+              ),
             ),
           ),
         ],
@@ -208,6 +399,27 @@ class AppDrawer extends StatelessWidget {
           color: Theme.of(context).colorScheme.primary,
           fontWeight: FontWeight.bold,
           letterSpacing: 0.8,
+        ),
+      ),
+    );
+  }
+
+  Widget _profileBadge(String label) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 9,
+        vertical: 4,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.18),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 10,
+          fontWeight: FontWeight.w500,
         ),
       ),
     );

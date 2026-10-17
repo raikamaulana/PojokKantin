@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../core/route_names.dart';
+import '../core/theme.dart';
 
 class AppBottomNav extends StatelessWidget {
   final int currentIndex;
@@ -29,31 +30,55 @@ class AppBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: (index) => _onTap(context, index),
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home_outlined),
-          activeIcon: Icon(Icons.home),
-          label: 'Beranda',
+    return Container(
+      color: AppTheme.tint,
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(22),
+          topRight: Radius.circular(22),
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.receipt_long_outlined),
-          activeIcon: Icon(Icons.receipt_long),
-          label: 'Pesanan',
+        child: SizedBox(
+          height: 72,
+          child: BottomNavigationBar(
+            backgroundColor: Colors.white,
+            type: BottomNavigationBarType.fixed,
+            currentIndex: currentIndex,
+            onTap: (index) => _onTap(context, index),
+
+            selectedFontSize: 12,
+            unselectedFontSize: 12,
+            selectedLabelStyle: const TextStyle(
+              fontWeight: FontWeight.w500,
+            ),
+            unselectedLabelStyle: const TextStyle(
+              fontWeight: FontWeight.w500,
+            ),
+
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_outlined),
+                activeIcon: Icon(Icons.home),
+                label: 'Beranda',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.receipt_long_outlined),
+                activeIcon: Icon(Icons.receipt_long),
+                label: 'Pesanan',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart_outlined),
+                activeIcon: Icon(Icons.shopping_cart),
+                label: 'Keranjang',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person_outline),
+                activeIcon: Icon(Icons.person),
+                label: 'Profil',
+              ),
+            ],
+          ),
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart_outlined),
-          activeIcon: Icon(Icons.shopping_cart),
-          label: 'Keranjang',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person_outline),
-          activeIcon: Icon(Icons.person),
-          label: 'Profil',
-        ),
-      ],
+      ),
     );
   }
 }

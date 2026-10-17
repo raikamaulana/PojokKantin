@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../core/models.dart';
+import 'status_chip.dart';
 
 class KantinCard extends StatelessWidget {
   final Kantin kantin;
@@ -14,125 +15,100 @@ class KantinCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colors = theme.colorScheme;
-
-    final isActive = kantin.status.toLowerCase() == 'aktif';
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Card(
-      margin: const EdgeInsets.only(bottom: 12),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(14),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Ikon kantin
-              Container(
-                width: 64,
-                height: 64,
-                decoration: BoxDecoration(
-                  color: colors.primaryContainer,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(
-                  Icons.storefront_outlined,
-                  color: colors.primary,
-                  size: 30,
-                ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Foto kantin
+            AspectRatio(
+              aspectRatio: 16 / 9,
+              child: kantin.imagePath.isNotEmpty
+                  ? Image.asset(
+                      kantin.imagePath,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return _imagePlaceholder(colorScheme);
+                      },
+                    )
+                  : _imagePlaceholder(colorScheme),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    kantin.nama,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleMedium
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+
+                  const SizedBox(height: 6),
+
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.location_on_outlined,
+                        size: 16,
+                        color: colorScheme.primary,
+                      ),
+                      const SizedBox(width: 4),
+                      Expanded(
+                        child: Text(
+                          kantin.lokasi,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 6),
+
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.access_time_outlined,
+                        size: 16,
+                      ),
+                      const SizedBox(width: 4),
+                      Expanded(
+                        child: Text(
+                          '${kantin.jamBuka} - ${kantin.jamTutup}',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  StatusChip(status: kantin.status),
+                ],
               ),
-
-              const SizedBox(width: 12),
-
-              // Informasi kantin
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      kantin.nama,
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-
-                    const SizedBox(height: 5),
-
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.location_on_outlined,
-                          size: 15,
-                          color: colors.onSurfaceVariant,
-                        ),
-                        const SizedBox(width: 4),
-                        Expanded(
-                          child: Text(
-                            kantin.lokasi,
-                            style: theme.textTheme.bodySmall,
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 4),
-
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.access_time_outlined,
-                          size: 15,
-                          color: colors.onSurfaceVariant,
-                        ),
-                        const SizedBox(width: 4),
-                        Expanded(
-                          child: Text(
-                            '${kantin.jamBuka} - ${kantin.jamTutup}',
-                            style: theme.textTheme.bodySmall,
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 9),
-
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 9,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: isActive
-                            ? const Color(0xFFE7F5EA)
-                            : colors.surfaceContainerHighest,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        kantin.status,
-                        style: theme.textTheme.labelSmall?.copyWith(
-                          color: isActive
-                              ? const Color(0xFF247A3D)
-                              : colors.onSurfaceVariant,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              if (onTap != null) ...[
-                const SizedBox(width: 4),
-                Icon(
-                  Icons.chevron_right,
-                  color: colors.onSurfaceVariant,
-                ),
-              ],
-            ],
-          ),
+            ),
+          ],
         ),
+      ),
+    );
+  }
+
+  Widget _imagePlaceholder(ColorScheme colorScheme) {
+    return Container(
+      color: colorScheme.primaryContainer,
+      alignment: Alignment.center,
+      child: Icon(
+        Icons.storefront_outlined,
+        size: 48,
+        color: colorScheme.primary,
       ),
     );
   }

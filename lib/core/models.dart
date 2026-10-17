@@ -27,6 +27,7 @@ class Kantin {
   final String jamBuka;
   final String jamTutup;
   final String status;
+  final String imagePath;
 
   const Kantin({
     required this.id,
@@ -37,6 +38,7 @@ class Kantin {
     required this.jamBuka,
     required this.jamTutup,
     required this.status,
+    required this.imagePath,
   });
 
   String get lokasi => 'Zona $zona, No. $nomor';
@@ -50,6 +52,7 @@ class MenuKantin {
   final String deskripsi;
   final int harga;
   final bool tersedia;
+  final String imagePath;
 
   const MenuKantin({
     required this.id,
@@ -59,6 +62,7 @@ class MenuKantin {
     required this.deskripsi,
     required this.harga,
     required this.tersedia,
+    required this.imagePath,
   });
 }
 
