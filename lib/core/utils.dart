@@ -15,7 +15,7 @@ String formatRupiah(int nominal) {
     }
   }
 
-  return 'Rp ${buffer.toString()}';
+  return 'Rp${buffer.toString()}';
 }
 
 // Menampilkan notifikasi singkat di bawah layar

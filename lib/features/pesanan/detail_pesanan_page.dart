@@ -55,7 +55,26 @@ class DetailPesananPage extends StatelessWidget {
 
     if (pesanan == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Detail Pesanan')),
+        backgroundColor: AppTheme.background,
+        appBar: AppBar(
+          backgroundColor: AppTheme.primary,
+          foregroundColor: Colors.white,
+          centerTitle: true,
+          toolbarHeight: 68,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(22),
+              bottomRight: Radius.circular(22),
+            ),
+          ),
+          title: const Text(
+            'Detail Pesanan',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
         body: const Center(
           child: Padding(
             padding: EdgeInsets.all(24),
@@ -75,193 +94,243 @@ class DetailPesananPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
-        title: const Text('Detail Pesanan'),
+        backgroundColor: AppTheme.primary,
+        foregroundColor: Colors.white,
+        centerTitle: true,
+        toolbarHeight: 68,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(22),
+            bottomRight: Radius.circular(22),
+          ),
+        ),
+        title: const Text(
+          'Detail Pesanan',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          Card(
-            color: AppTheme.surface,
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-              side: const BorderSide(color: AppTheme.divider),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  Icon(
-                    _ikonStatus(pesanan.status),
-                    size: 54,
-                    color: warna,
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    pesanan.status,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFFFFFFFF),
+              Color(0xFFFFF5F6),
+              Color(0xFFF8DBE1),
+            ],
+          ),
+        ),
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            Card(
+              color: AppTheme.surface,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+                side: const BorderSide(color: AppTheme.divider),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    Icon(
+                      _ikonStatus(pesanan.status),
+                      size: 54,
                       color: warna,
                     ),
-                  ),
-                  const SizedBox(height: 6),
-                  const Text(
-                    'Status pesanan saat ini',
-                    style: TextStyle(
-                      color: AppTheme.textSecondary,
-                      fontSize: 13,
-                    ),
-                  ),
-                  const SizedBox(height: 18),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 10,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppTheme.tint,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      pesanan.id,
-                      style: const TextStyle(
-                        color: AppTheme.primary,
+                    const SizedBox(height: 12),
+                    Text(
+                      pesanan.status,
+                      style: TextStyle(
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        color: warna,
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          _judulBagian(
-            Icons.storefront_outlined,
-            'Informasi Kantin',
-          ),
-          const SizedBox(height: 10),
-          _kartuInformasi([
-            _barisInfo(
-              'Nama kantin',
-              kantin?.nama ?? 'Kantin tidak tersedia',
-            ),
-            _barisInfo(
-              'Lokasi',
-              kantin?.lokasi ?? '-',
-            ),
-            _barisInfo(
-              'Jam pengambilan',
-              pesanan.jamAmbil,
-            ),
-          ]),
-          const SizedBox(height: 20),
-          _judulBagian(
-            Icons.receipt_long_outlined,
-            'Rincian Pesanan',
-          ),
-          const SizedBox(height: 10),
-          _kartuInformasi([
-            ...pesanan.items.map((detail) {
-              final menu = DummyData.cariMenu(detail.menuId);
-              final namaMenu = menu?.nama ?? detail.menuId;
-              final harga = menu?.harga ?? 0;
-
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                    const SizedBox(height: 6),
+                    const Text(
+                      'Status pesanan saat ini',
+                      style: TextStyle(
+                        color: AppTheme.textSecondary,
+                        fontSize: 13,
+                      ),
+                    ),
+                    const SizedBox(height: 18),
                     Container(
-                      width: 42,
-                      height: 42,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 10,
+                      ),
                       decoration: BoxDecoration(
                         color: AppTheme.tint,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Icon(
-                        Icons.restaurant_outlined,
-                        color: AppTheme.primary,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            namaMenu,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: AppTheme.textPrimary,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            '${detail.jumlah} x ${_rupiah(harga)}',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: AppTheme.textSecondary,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Text(
-                      _rupiah(harga * detail.jumlah),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: AppTheme.textPrimary,
+                      child: Text(
+                        pesanan.id,
+                        style: const TextStyle(
+                          color: AppTheme.primary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ],
                 ),
-              );
-            }),
-            const Divider(height: 8),
-            const SizedBox(height: 8),
-            _barisInfo(
-              'Total pembayaran',
-              _rupiah(pesanan.total),
-              nilaiTebal: true,
-              warnaNilai: AppTheme.accent,
+              ),
             ),
-          ]),
-          const SizedBox(height: 20),
-          _judulBagian(
-            Icons.payments_outlined,
-            'Metode Pembayaran',
-          ),
-          const SizedBox(height: 10),
-          _kartuInformasi([
-            _barisInfo(
-              'Metode',
-              pesanan.metodePembayaran,
+            const SizedBox(height: 20),
+            _judulBagian(
+              Icons.storefront_outlined,
+              'Informasi Kantin',
             ),
-            _barisInfo(
-              'Total',
-              _rupiah(pesanan.total),
-              nilaiTebal: true,
+            const SizedBox(height: 10),
+            _kartuInformasi([
+              _barisInfo(
+                'Nama kantin',
+                kantin?.nama ?? 'Kantin tidak tersedia',
+              ),
+              _barisInfo(
+                'Lokasi',
+                kantin?.lokasi ?? '-',
+              ),
+              _barisInfo(
+                'Jam pengambilan',
+                pesanan.jamAmbil,
+              ),
+            ]),
+            const SizedBox(height: 20),
+            _judulBagian(
+              Icons.receipt_long_outlined,
+              'Rincian Pesanan',
             ),
-          ]),
-          const SizedBox(height: 24),
-          SizedBox(
-            height: 48,
-            child: OutlinedButton.icon(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.arrow_back),
-              label: const Text('Kembali ke Riwayat Pesanan'),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: AppTheme.primary,
-                side: const BorderSide(color: AppTheme.primary),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+            const SizedBox(height: 10),
+            _kartuInformasi([
+              ...pesanan.items.map((detail) {
+                final menu = DummyData.cariMenu(detail.menuId);
+                final namaMenu = menu?.nama ?? detail.menuId;
+                final harga = menu?.harga ?? 0;
+
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: SizedBox(
+                          width: 48,
+                          height: 48,
+                          child: menu != null && menu.imagePath.isNotEmpty
+                              ? Image.asset(
+                                  menu.imagePath,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (_, _, _) => const Icon(
+                                    Icons.restaurant_outlined,
+                                    color: AppTheme.primary,
+                                  ),
+                                )
+                              : const Icon(
+                                  Icons.restaurant_outlined,
+                                  color: AppTheme.primary,
+                                ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              namaMenu,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: AppTheme.textPrimary,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              '${detail.jumlah} x ${_rupiah(harga)}',
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: AppTheme.textSecondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        _rupiah(harga * detail.jumlah),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: AppTheme.textPrimary,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+              const Divider(height: 8),
+              const SizedBox(height: 8),
+              _barisInfo(
+                'Total pembayaran',
+                _rupiah(pesanan.total),
+                nilaiTebal: true,
+                warnaNilai: AppTheme.accent,
+              ),
+            ]),
+            const SizedBox(height: 20),
+            _judulBagian(
+              Icons.payments_outlined,
+              'Metode Pembayaran',
+            ),
+            const SizedBox(height: 10),
+            _kartuInformasi([
+              _barisInfo(
+                'Metode',
+                pesanan.metodePembayaran,
+              ),
+              _barisInfo(
+                'Total',
+                _rupiah(pesanan.total),
+                nilaiTebal: true,
+              ),
+            ]),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: ElevatedButton.icon(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(
+                  Icons.arrow_back,
+                  size: 20,
+                ),
+                label: const Text(
+                  'Kembali ke Riwayat Pesanan',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.primary,
+                  foregroundColor: Colors.white,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

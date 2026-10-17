@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/dummy_data.dart';
 import '../../core/models.dart';
 import '../../core/theme.dart';
+import '../../core/utils.dart';
 
 class DetailPesananMasukPage extends StatelessWidget {
   const DetailPesananMasukPage({super.key});
@@ -14,8 +15,25 @@ class DetailPesananMasukPage extends StatelessWidget {
 
     if (pesanan == null) {
       return Scaffold(
+        backgroundColor: AppTheme.background,
         appBar: AppBar(
-          title: const Text('Detail Pesanan Masuk'),
+          backgroundColor: AppTheme.primary,
+          foregroundColor: Colors.white,
+          centerTitle: true,
+          toolbarHeight: 68,
+          title: const Text(
+            'Detail Pesanan Masuk',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(22),
+              bottomRight: Radius.circular(22),
+            ),
+          ),
         ),
         body: const Center(
           child: Text('Data pesanan tidak ditemukan.'),
@@ -26,150 +44,200 @@ class DetailPesananMasukPage extends StatelessWidget {
     final kantin = DummyData.cariKantin(pesanan.kantinId);
 
     return Scaffold(
+      backgroundColor: AppTheme.background,
       appBar: AppBar(
-        title: const Text('Detail Pesanan Masuk'),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          _BagianKartu(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Informasi Pesanan',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                _BarisInfo(
-                  label: 'Nomor pesanan',
-                  value: pesanan.id,
-                ),
-                _BarisInfo(
-                  label: 'Nama pembeli',
-                  value: pesanan.pembeli,
-                ),
-                _BarisInfo(
-                  label: 'Kantin',
-                  value: kantin?.nama ?? pesanan.kantinId,
-                ),
-                _BarisInfo(
-                  label: 'Lokasi kantin',
-                  value: kantin?.lokasi ?? '-',
-                ),
-                _BarisInfo(
-                  label: 'Waktu pengambilan',
-                  value: pesanan.jamAmbil,
-                ),
-                _BarisInfo(
-                  label: 'Metode pembayaran',
-                  value: pesanan.metodePembayaran,
-                ),
-                _BarisInfo(
-                  label: 'Status',
-                  value: pesanan.status,
-                  valueColor: AppTheme.accent,
-                ),
-              ],
-            ),
+        backgroundColor: AppTheme.primary,
+        foregroundColor: Colors.white,
+        centerTitle: true,
+        toolbarHeight: 68,
+        title: const Text(
+          'Detail Pesanan Masuk',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
-          const SizedBox(height: 16),
-          _BagianKartu(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Daftar Menu',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.textPrimary,
+        ),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(22),
+            bottomRight: Radius.circular(22),
+          ),
+        ),
+      ),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFFFFFFFF),
+              Color(0xFFFFF5F6),
+              Color(0xFFF8DBE1),
+            ],
+          ),
+        ),
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            _BagianKartu(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Informasi Pesanan',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.textPrimary,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 12),
-                ...pesanan.items.map((item) {
-                  final menu = DummyData.cariMenu(item.menuId);
+                  const SizedBox(height: 16),
+                  _BarisInfo(
+                    label: 'Nomor pesanan',
+                    value: pesanan.id,
+                  ),
+                  _BarisInfo(
+                    label: 'Nama pembeli',
+                    value: pesanan.pembeli,
+                  ),
+                  _BarisInfo(
+                    label: 'Kantin',
+                    value: kantin?.nama ?? pesanan.kantinId,
+                  ),
+                  _BarisInfo(
+                    label: 'Lokasi kantin',
+                    value: kantin?.lokasi ?? '-',
+                  ),
+                  _BarisInfo(
+                    label: 'Waktu pengambilan',
+                    value: pesanan.jamAmbil,
+                  ),
+                  _BarisInfo(
+                    label: 'Metode pembayaran',
+                    value: pesanan.metodePembayaran,
+                  ),
+                  _BarisInfo(
+                    label: 'Status',
+                    value: pesanan.status,
+                    valueColor: AppTheme.accent,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            _BagianKartu(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Daftar Menu',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  ...pesanan.items.map((item) {
+                    final menu = DummyData.cariMenu(item.menuId);
 
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Icon(
-                          Icons.restaurant_menu,
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Icon(
+                            Icons.restaurant_menu,
+                            color: AppTheme.primary,
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  menu?.nama ?? item.menuId,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  '${item.jumlah} x ${formatRupiah(menu?.harga ?? 0)}',
+                                  style: const TextStyle(
+                                    color: AppTheme.textSecondary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Text(
+                            formatRupiah((menu?.harga ?? 0) * item.jumlah),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+                  const Divider(color: AppTheme.divider),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Total pembayaran',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        formatRupiah(pesanan.total),
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                           color: AppTheme.primary,
                         ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                menu?.nama ?? item.menuId,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                '${item.jumlah} x Rp${menu?.harga ?? 0}',
-                                style: const TextStyle(
-                                  color: AppTheme.textSecondary,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Text(
-                          'Rp${(menu?.harga ?? 0) * item.jumlah}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }),
-                const Divider(color: AppTheme.divider),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Total pembayaran',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
                       ),
-                    ),
-                    Text(
-                      'Rp${pesanan.total}',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: AppTheme.primary,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              height: 46,
+              child: ElevatedButton.icon(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(
+                  Icons.arrow_back,
+                  size: 20,
                 ),
-              ],
+                label: const Text(
+                  'Kembali ke Pesanan Masuk',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.primary,
+                  foregroundColor: Colors.white,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
             ),
-          ),
-          const SizedBox(height: 24),
-          SizedBox(
-            width: double.infinity,
-            child: OutlinedButton.icon(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.arrow_back),
-              label: const Text('Kembali ke Pesanan Masuk'),
-            ),
-          ),
-        ],
-      ),
+          ],
+        ),
+      ), 
     );
   }
 }

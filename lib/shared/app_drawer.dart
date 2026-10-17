@@ -21,8 +21,8 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentUser = user ?? DummyData.currentUser;
-    final isSeller = currentUser.role == 'penjual';
-    final isAdmin = currentUser.role == 'admin';
+    // final isSeller = currentUser.role == 'penjual';
+    // final isAdmin = currentUser.role == 'admin';
 
     return Drawer(
       backgroundColor: Colors.white,
@@ -150,6 +150,7 @@ class AppDrawer extends StatelessWidget {
                 vertical: 12,
               ),
               children: [
+
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 20,
@@ -184,7 +185,45 @@ class AppDrawer extends StatelessWidget {
                   onTap: () => _navigate(context, AppRoutes.profil),
                 ),
 
-                if (!isSeller && !isAdmin) ...[
+                _sectionLabel(context, 'BERANDA'),
+
+                ListTile(
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 5,
+                  ),
+                  leading: Container(
+                    width: 42,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      color: AppTheme.tint,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(
+                      Icons.home_outlined,
+                      color: AppTheme.primary,
+                      size: 22,
+                    ),
+                  ),
+                  title: const Text(
+                    'Beranda Utama',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppTheme.textPrimary,
+                    ),
+                  ),
+                  trailing: const Icon(
+                    Icons.chevron_right_rounded,
+                    color: AppTheme.textSecondary,
+                    size: 20,
+                  ),
+                  onTap: () => _navigate(context, AppRoutes.home),
+                ),
+
+                // SEMENTARA JANGAN SESUAIKAN DENGAN ROLE DAHULU (IF), SUPAYA BISA NAMPILIN SEMUA MENU YANG ADA DI DRAWER
+                // if (!isSeller && !isAdmin) ...[
+                ...[
                   _sectionLabel(context, 'LAYANAN KANTIN'),
                   ListTile(
                     contentPadding: const EdgeInsets.symmetric(
@@ -233,7 +272,9 @@ class AppDrawer extends StatelessWidget {
                   ),
                 ],
 
-                if (isSeller) ...[
+                // SEMENTARA JANGAN SESUAIKAN DENGAN ROLE DAHULU (IF), SUPAYA BISA NAMPILIN SEMUA MENU YANG ADA DI DRAWER
+                // if (isSeller) ...[
+                ...[
                   _sectionLabel(context, 'PANEL PENJUAL'),
                   ListTile(
                     contentPadding: const EdgeInsets.symmetric(
@@ -277,7 +318,9 @@ class AppDrawer extends StatelessWidget {
                   ),
                 ],
 
-                if (isAdmin) ...[
+                // SEMENTARA JANGAN SESUAIKAN DENGAN ROLE DAHULU (IF), SUPAYA BISA NAMPILIN SEMUA MENU YANG ADA DI DRAWER
+                // if (isAdmin) ...[
+                ...[
                   _sectionLabel(context, 'ADMIN'),
                   ListTile(
                     contentPadding: const EdgeInsets.symmetric(

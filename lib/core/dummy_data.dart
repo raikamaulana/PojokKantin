@@ -133,6 +133,45 @@ class DummyData {
       total: 12000,
       status: 'Siap diambil',
     ),
+    Pesanan(
+      id: 'ORD-003',
+      pembeli: 'Rizky Dermawan',
+      kantinId: 'K001',
+      items: [
+        ItemPesanan(menuId: 'M001', jumlah: 3),
+        ItemPesanan(menuId: 'M003', jumlah: 2),
+      ],
+      jamAmbil: '10.30',
+      metodePembayaran: 'QRIS',
+      total: 53000,
+      status: 'Selesai',
+    ),
+    Pesanan(
+      id: 'ORD-004',
+      pembeli: 'Akmal Fauzan',
+      kantinId: 'K001',
+      items: [
+        ItemPesanan(menuId: 'M001', jumlah: 2),
+        ItemPesanan(menuId: 'M002', jumlah: 1),
+      ],
+      jamAmbil: '11.45',
+      metodePembayaran: 'Tunai di kantin',
+      total: 42000,
+      status: 'Selesai',
+    ),
+    Pesanan(
+      id: 'ORD-005',
+      pembeli: 'Jemiansyah',
+      kantinId: 'K001',
+      items: [
+        ItemPesanan(menuId: 'M003', jumlah: 4),
+        ItemPesanan(menuId: 'M004', jumlah: 2),
+      ],
+      jamAmbil: '12.00',
+      metodePembayaran: 'QRIS',
+      total: 20000,
+      status: 'Selesai',
+    ),
   ];
 
   // Data pengajuan kantin untuk halaman admin

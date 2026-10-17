@@ -5,6 +5,8 @@ import '../../core/dummy_data.dart';
 import '../../core/models.dart';
 import '../../core/route_names.dart';
 import '../../core/theme.dart';
+import '../../shared/app_bottom_nav.dart';
+import '../../shared/app_drawer.dart';
 
 class KeranjangPage extends StatefulWidget {
   const KeranjangPage({super.key});
@@ -77,61 +79,123 @@ class _KeranjangPageState extends State<KeranjangPage> {
         : null;
 
     return Scaffold(
+      backgroundColor: AppTheme.background,
+      drawer: const AppDrawer(),
+
+      // Top Bar
       appBar: AppBar(
-        title: const Text('Keranjang'),
+        backgroundColor: AppTheme.primary,
+        foregroundColor: Colors.white,
+        centerTitle: true,
+        toolbarHeight: 68,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(22),
+            bottomRight: Radius.circular(22),
+          ),
+        ),
+        title: const Text(
+          'Keranjang',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
-      body: _items.isEmpty
-          ? _buildKosong()
-          : Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.all(16),
+
+      // Bottom Navigation: index 2 = Keranjang
+      bottomNavigationBar: const AppBottomNav(currentIndex: 2),
+
+      body: SizedBox.expand(
+        child: Stack(
+          children: [
+            // Background gradasi seperti Home
+            const Positioned.fill(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFFFFFFFF),
+                      Color(0xFFFFF5F6),
+                      Color(0xFFF8DBE1),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            // Konten keranjang
+            _items.isEmpty
+                ? _buildKosong()
+                : Column(
                     children: [
-                      if (kantin != null) ...[
-                        Row(
+                      Expanded(
+                        child: ListView(
+                          padding: const EdgeInsets.all(16),
                           children: [
-                            const Icon(
-                              Icons.storefront_outlined,
-                              color: AppTheme.primary,
-                              size: 26,
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                            if (kantin != null) ...[
+                              Row(
                                 children: [
-                                  Text(
-                                    kantin.nama,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppTheme.textPrimary,
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: SizedBox(
+                                      width: 64,
+                                      height: 64,
+                                      child: Image.asset(
+                                        kantin.imagePath,
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (_, _, _) => const Icon(
+                                          Icons.storefront_outlined,
+                                          color: AppTheme.primary,
+                                          size: 30,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    kantin.lokasi,
-                                    style: const TextStyle(
-                                      fontSize: 13,
-                                      color: AppTheme.textSecondary,
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          kantin.nama,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppTheme.textPrimary,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          kantin.lokasi,
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            color: AppTheme.textSecondary,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
+                              const SizedBox(height: 16),
+                            ],
+
+                            ..._items.map(_buildItem),
                           ],
                         ),
-                        const SizedBox(height: 16),
-                      ],
-                      ..._items.map(_buildItem),
+                      ),
+
+                      // Tetap di bawah daftar item
+                      _buildRingkasan(),
                     ],
                   ),
-                ),
-                _buildRingkasan(),
-              ],
-            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -143,19 +207,20 @@ class _KeranjangPageState extends State<KeranjangPage> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 64,
-              height: 64,
-              decoration: BoxDecoration(
-                color: AppTheme.tint,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(
-                item.menu.kategori == 'Minuman'
-                    ? Icons.local_cafe_outlined
-                    : Icons.restaurant_outlined,
-                color: AppTheme.primary,
-                size: 30,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: SizedBox(
+                width: 64,
+                height: 64,
+                child: Image.asset(
+                  item.menu.imagePath,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, _, _) => const Icon(
+                    Icons.restaurant_outlined,
+                    color: AppTheme.primary,
+                    size: 30,
+                  ),
+                ),
               ),
             ),
             const SizedBox(width: 12),
@@ -359,7 +424,13 @@ class _KeranjangPageState extends State<KeranjangPage> {
             ),
             const SizedBox(height: 20),
             OutlinedButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  AppRoutes.home,
+                  (route) => route.isFirst,
+                );
+              },
               child: const Text('Kembali'),
             ),
           ],

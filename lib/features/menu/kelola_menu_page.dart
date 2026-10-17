@@ -4,6 +4,7 @@ import '../../core/dummy_data.dart';
 import '../../core/models.dart';
 import '../../core/theme.dart';
 import '../../shared/kantin_bottom_nav.dart';
+import '../../shared/app_drawer.dart';
 import 'tambah_menu_page.dart';
 import 'edit_menu_page.dart';
 
@@ -185,36 +186,42 @@ class _KelolaMenuPageState extends State<KelolaMenuPage> {
     final kantin = DummyData.cariKantin(widget.kantinId);
     final available = _menus.where((m) => _availability[m.id] == true).length;
     final unavailable = _menus.length - available;
+
+    final u = DummyData.currentUser;
+
+    final penjual = AppUser(
+      nama: u.nama,
+      email: u.email,
+      username: u.username,
+      nim: u.nim,
+      nomorHp: u.nomorHp,
+      identitas: u.identitas,
+      role: 'penjual',
+    );
+
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
         backgroundColor: AppTheme.primary,
         foregroundColor: Colors.white,
-        toolbarHeight: 78,
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(22))),
-        centerTitle: false,
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          tooltip: 'Kembali ke Dashboard Kantin',
-          icon: const Icon(Icons.arrow_back_rounded),
-          onPressed: () {
-            if (Navigator.of(context).canPop()) {
-              Navigator.of(context).pop();
-            } else {
-              Navigator.of(context).pushReplacementNamed('/kantin/dashboard');
-            }
-          },
+        centerTitle: true,
+        toolbarHeight: 68,
+        title: const Text(
+          'Kelola Menu',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        titleSpacing: 0,
-        title: const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Kelola Menu', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            SizedBox(height: 3),
-            Text('Atur ketersediaan & harga menu kantin', style: TextStyle(fontSize: 11, fontWeight: FontWeight.normal)),
-          ],
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(22),
+            bottomRight: Radius.circular(22),
+          ),
         ),
       ),
+
+      drawer: AppDrawer(user: penjual),
       body: Stack(
         children: [
           const Positioned.fill(

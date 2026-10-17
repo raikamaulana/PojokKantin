@@ -5,6 +5,7 @@ import '../../shared/app_bottom_nav.dart';
 import '../../core/dummy_data.dart';
 import '../../core/models.dart';
 import '../../core/route_names.dart';
+import '../../core/kantin_status.dart';
 
 
 class KantinMenuListPage extends StatefulWidget {
@@ -232,7 +233,8 @@ class _KantinMenuListPageState extends State<KantinMenuListPage> {
   }
 
   Widget _buildMenuCard(MenuKantin menu) {
-    final isOpen = DummyData.kantin[_selectedKantinIndex].id != 'K003';
+    final kantin = DummyData.kantin[_selectedKantinIndex];
+    final isOpen = KantinStatus.isOpen(kantin);
     final canOrder = isOpen && menu.tersedia;
 
     return InkWell(
@@ -424,7 +426,7 @@ class _KantinMenuListPageState extends State<KantinMenuListPage> {
                     const SizedBox(height: 20),
 
                     SizedBox(
-                      height: 116,
+                      height: 145,
                       child: PageView.builder(
                         controller: _pageController,
                         physics: const PageScrollPhysics(),
@@ -438,8 +440,8 @@ class _KantinMenuListPageState extends State<KantinMenuListPage> {
                         itemBuilder: (context, index) {
                           final kantin = DummyData.kantin[index];
 
-                          // Status dummy.
-                          final bool isOpen = kantin.id != 'K003';
+                          final bool isOpen = KantinStatus.isOpen(kantin);
+                          final String statusLabel = KantinStatus.badgeLabel(kantin);
 
                           return Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -482,24 +484,20 @@ class _KantinMenuListPageState extends State<KantinMenuListPage> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          Row(
+                                          Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Expanded(
-                                                child: Text(
-                                                  kantin.nama,
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  style: const TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: AppTheme.textPrimary,
-                                                  ),
+                                              Text(
+                                                kantin.nama,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: AppTheme.textPrimary,
                                                 ),
                                               ),
-
-                                              const SizedBox(width: 6),
-
+                                              const SizedBox(height: 6),
                                               Container(
                                                 padding: const EdgeInsets.symmetric(
                                                   horizontal: 8,
@@ -512,9 +510,9 @@ class _KantinMenuListPageState extends State<KantinMenuListPage> {
                                                   borderRadius: BorderRadius.circular(20),
                                                 ),
                                                 child: Text(
-                                                  isOpen ? 'Buka' : 'Tutup',
+                                                  statusLabel,
                                                   style: TextStyle(
-                                                    fontSize: 10,
+                                                    fontSize: 9,
                                                     fontWeight: FontWeight.w600,
                                                     color: isOpen
                                                         ? const Color(0xFF258345)

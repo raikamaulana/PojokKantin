@@ -5,6 +5,8 @@ import '../../core/dummy_data.dart';
 import '../../core/models.dart';
 import '../../core/route_names.dart';
 import '../../core/theme.dart';
+import '../../shared/app_bottom_nav.dart';
+import '../../shared/app_drawer.dart';
 
 class RiwayatPesananPage extends StatelessWidget {
   const RiwayatPesananPage({super.key});
@@ -54,40 +56,83 @@ class RiwayatPesananPage extends StatelessWidget {
     final pesanan = DummyData.pesanan.reversed.toList();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Riwayat Pesanan'),
-      ),
       backgroundColor: AppTheme.background,
-      body: pesanan.isEmpty
-          ? _buildKosong()
-          : ListView(
-              padding: const EdgeInsets.all(16),
-              children: [
-                const Text(
-                  'Pesanan Saya',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.textPrimary,
+      drawer: const AppDrawer(),
+
+      appBar: AppBar(
+        backgroundColor: AppTheme.primary,
+        foregroundColor: Colors.white,
+        centerTitle: true,
+        toolbarHeight: 68,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(22),
+            bottomRight: Radius.circular(22),
+          ),
+        ),
+        title: const Text(
+          'Riwayat Pesanan',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+
+      bottomNavigationBar: const AppBottomNav(currentIndex: 1),
+
+      body: SizedBox.expand(
+        child: Stack(
+          children: [
+            const Positioned.fill(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFFFFFFFF),
+                      Color(0xFFFFF5F6),
+                      Color(0xFFF8DBE1),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 6),
-                const Text(
-                  'Lihat status dan ringkasan pesananmu.',
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: AppTheme.textSecondary,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                ...pesanan.map(
-                  (item) => Padding(
-                    padding: const EdgeInsets.only(bottom: 14),
-                    child: _buildKartuPesanan(context, item),
-                  ),
-                ),
-              ],
+              ),
             ),
+
+            pesanan.isEmpty
+                ? _buildKosong()
+                : ListView(
+                    padding: const EdgeInsets.all(16),
+                    children: [
+                      const Text(
+                        'Pesanan Saya',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: AppTheme.textPrimary,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      const Text(
+                        'Lihat status dan ringkasan pesananmu.',
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: AppTheme.textSecondary,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      ...pesanan.map(
+                        (item) => Padding(
+                          padding: const EdgeInsets.only(bottom: 14),
+                          child: _buildKartuPesanan(context, item),
+                        ),
+                      ),
+                    ],
+                  ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -145,16 +190,24 @@ class RiwayatPesananPage extends StatelessWidget {
           children: [
             Row(
               children: [
-                Container(
-                  width: 42,
-                  height: 42,
-                  decoration: BoxDecoration(
-                    color: AppTheme.tint,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Icon(
-                    Icons.receipt_long_outlined,
-                    color: AppTheme.primary,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: SizedBox(
+                    width: 48,
+                    height: 48,
+                    child: kantin != null && kantin.imagePath.isNotEmpty
+                        ? Image.asset(
+                            kantin.imagePath,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, _, _) => const Icon(
+                              Icons.storefront_outlined,
+                              color: AppTheme.primary,
+                            ),
+                          )
+                        : const Icon(
+                            Icons.storefront_outlined,
+                            color: AppTheme.primary,
+                          ),
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -268,11 +321,12 @@ class RiwayatPesananPage extends StatelessWidget {
               width: double.infinity,
               height: 42,
               child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: AppTheme.primary,
-                  side: const BorderSide(color: AppTheme.primary),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.primary,
+                  foregroundColor: Colors.white,
+                  elevation: 0,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                 ),
                 onPressed: () {
@@ -282,7 +336,13 @@ class RiwayatPesananPage extends StatelessWidget {
                     arguments: item,
                   );
                 },
-                child: const Text('Lihat Detail Pesanan'),
+                child: const Text(
+                  'Lihat Detail Pesanan',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ),
           ],
