@@ -28,7 +28,7 @@ class ProfilPage extends StatelessWidget {
             const SizedBox(height: 20),
 
             Text(
-              'Rina Maharani',
+              'Puan Maharani',
               style: theme.textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
               ),

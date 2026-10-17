@@ -31,26 +31,37 @@ class _SplashPageState extends State<SplashPage> {
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.storefront_rounded,
-                  size: 90,
-                  color: theme.colorScheme.primary,
-                ),
-
-                const SizedBox(height: 24),
-
-                Text(
-                  'Pojok Kantin',
-                  style: theme.textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
+                Container(
+                  width: 110,
+                  height: 110,
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.primaryContainer,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.storefront_rounded,
+                    size: 100,
+                    color: theme.colorScheme.primary,
                   ),
                 ),
 
-                const SizedBox(height: 8),
+                const SizedBox(height: 32),
+
+                Text(
+                  'Pojok Kantin',
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    color: theme.colorScheme.secondary,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+
+                const SizedBox(height: 6),
 
                 Text(
                   '-- UNSIKA --',
@@ -60,17 +71,41 @@ class _SplashPageState extends State<SplashPage> {
                   ),
                 ),
 
-                const SizedBox(height: 24),
+                const SizedBox(height: 20),
+
+                SizedBox(
+                  width: 180,
+                  child: Divider(
+                    thickness: 1,
+                    color: theme.colorScheme.outlineVariant,
+                  ),
+                ),
+
+                const SizedBox(height: 20),
 
                 Text(
                   'Pre-Order Kantin Belakang UNSIKA',
                   textAlign: TextAlign.center,
-                  style: theme.textTheme.bodyLarge,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: theme.colorScheme.onSurface.withOpacity(0.7),
+                  ),
                 ),
 
                 const SizedBox(height: 40),
 
-                CircularProgressIndicator(color: theme.colorScheme.primary),
+                CircularProgressIndicator(
+                  strokeWidth: 3,
+                  color: theme.colorScheme.primary,
+                ),
+
+                const SizedBox(height: 16),
+
+                Text(
+                  'Memuat aplikasi...',
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurface.withOpacity(0.6),
+                  ),
+                ),
               ],
             ),
           ),
